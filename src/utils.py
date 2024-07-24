@@ -20,7 +20,7 @@ def load(filename: str):
     else:
         raise CustomException("Cannot be load the pickle file".capitalize())
     
-def device_init(self, device = "mps"):
+def device_init(self, device: str = "mps"):
     if device == "cuda":
         return torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
