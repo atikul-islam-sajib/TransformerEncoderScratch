@@ -102,6 +102,10 @@ if __name__ == "__main__":
         help="Mask for attention".capitalize(),
     )
 
+    parser.add_argument(
+        "--display", action="store_true", help="Display the arguments".capitalize()
+    )
+
     args = parser.parse_args()
 
     dimension = args.d_model
@@ -130,18 +134,20 @@ if __name__ == "__main__":
         dimension,
     ), "Dimension mismatch in the EncoderBlock".capitalize()
 
-    print(
-        "Total parameters of the model is # {}".format(
-            TransformerEncoder.total_params(model=netTransfomer)
+    if args.display:
+
+        print(
+            "Total parameters of the model is # {}".format(
+                TransformerEncoder.total_params(model=netTransfomer)
+            )
         )
-    )
 
-    print(summary(model=netTransfomer, input_size=(sequence_length, dimension)))
+        print(summary(model=netTransfomer, input_size=(sequence_length, dimension)))
 
-    draw_graph(
-        model=netTransfomer,
-        input_data=torch.randn(batch_size, sequence_length, dimension),
-    ).visual_graph.render(
-        filename=os.path.join(config()["path"]["FILES_PATH"], "transfomerEncoder"),
-        format="png",
-    )
+        draw_graph(
+            model=netTransfomer,
+            input_data=torch.randn(batch_size, sequence_length, dimension),
+        ).visual_graph.render(
+            filename=os.path.join(config()["path"]["FILES_PATH"], "transfomerEncoder"),
+            format="png",
+        )
