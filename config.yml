@@ -6,8 +6,8 @@ embedding:
   sequence_length: 200
 
 transformer:
-  dimension: 512
-  heads: 8
-  feed_forward: 2048
+  dimension: 768
+  heads: 12
+  feed_forward: 4096
   dropout: 0.1
   eps: 1e-6
