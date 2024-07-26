@@ -1,5 +1,6 @@
 import sys
 import torch
+import argparse
 import torch.nn as nn
 
 sys.path.append("./src")
@@ -86,6 +87,30 @@ class MultiHeadAttenion(nn.Module):
 
 
 if __name__ == "__main__":
-    attention = MultiHeadAttenion(dimension=512, heads=8, mask=None)
+    parser = argparse.ArgumentParser(
+        description="MultiHeadAttention for Transformer Encoder".title()
+    )
+    parser.add_argument(
+        "--dimension", type=int, default=512, help="dimension of the input".capitalize()
+    )
+    parser.add_argument(
+        "--heads", type=int, default=8, help="number of heads".capitalize()
+    )
+    parser.add_argument(
+        "--mask",
+        type=torch.Tensor,
+        default=None,
+        help="mask for attention".capitalize(),
+    )
 
-    print(attention(torch.randn(40, 200, 512)).size())
+    args = parser.parse_args()
+
+    attention = MultiHeadAttenion(
+        dimension=args.dimension, heads=args.heads, mask=args.mask
+    )
+
+    assert attention(torch.randn(40, 200, args.dimension)).size() == (
+        40,
+        200,
+        args.dimension,
+    ), "MultiHeadAttention output size is not equal to input size".capitalize()
