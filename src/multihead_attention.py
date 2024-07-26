@@ -22,6 +22,9 @@ class MultiHeadAttenion(nn.Module):
         self.QKV = nn.Linear(
             in_features=self.dimension, out_features=3 * self.dimension, bias=False
         )
+        self.layer = nn.Linear(
+            in_features=self.dimension, out_features=self.dimension, bias=False
+        )
 
     def forward(self, x: torch.Tensor, mask=None):
         if isinstance(x, torch.Tensor):
@@ -64,10 +67,25 @@ class MultiHeadAttenion(nn.Module):
                 and self.values.size()
             ), "attention size is not equal to query, key and values size".capitalize()
 
-            return attention
+            self.attention = attention.view(
+                attention.size(0),
+                attention.size(2),
+                attention.size(1),
+                attention.size(3),
+            )
+
+            self.attention = self.attention.view(
+                self.attention.size(0), self.attention.size(1), -1
+            )
+
+            assert (
+                self.attention.size(-1) == self.dimension
+            ), "attention size is not equal to dimension".capitalize()
+
+            return self.layer(self.attention)
 
 
 if __name__ == "__main__":
     attention = MultiHeadAttenion(dimension=512, heads=8, mask=None)
 
-    print(attention(torch.randn(40, 200, 512))[3].size())
+    print(attention(torch.randn(40, 200, 512)).size())
