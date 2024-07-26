@@ -26,10 +26,29 @@ class MultiHeadAttenion(nn.Module):
                 self.QueryKeyValues, 3, dim=-1
             )
 
+            self.query = self.query.view(
+                self.query.size(0),
+                self.query.size(1),
+                self.heads,
+                self.dimension // self.heads,
+            )
+            self.key = self.key.view(
+                self.key.size(0),
+                self.key.size(1),
+                self.heads,
+                self.dimension // self.heads,
+            )
+            self.values = self.values.view(
+                self.values.size(0),
+                self.values.size(1),
+                self.heads,
+                self.dimension // self.heads,
+            )
+
             return self.query, self.key, self.values
 
 
 if __name__ == "__main__":
     attention = MultiHeadAttenion(dimension=512, heads=8, mask=None)
 
-    print(attention(torch.randn(40, 200, 512))[0].size())
+    print(attention(torch.randn(40, 200, 512))[2].size())
