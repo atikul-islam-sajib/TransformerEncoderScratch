@@ -63,6 +63,10 @@ The repository provides scripts and notebooks to help you understand and experim
     └── utils.py
 ```
 
+### User Guide Notebook (Tutorial for inferencing)
+
+For detailed documentation on the implementation and usage, visit the -> [Transformer Encoder Tutorial Notebook](https://github.com/atikul-islam-sajib/TransformerEncoderScratch/blob/main/notebook/Model-Inference.ipynb)
+
 ## Example Script
 
 ```python
