@@ -15,8 +15,8 @@ class LayerNormalization(nn.Module):
         self.normalized_shape = normalized_shape
         self.epsilon = epsilon
 
-        self.gamma = torch.ones((self.normalized_shape,))
-        self.betas = torch.zeros((self.normalized_shape,))
+        self.gamma = nn.Parameter(torch.ones((self.normalized_shape,)))
+        self.betas = nn.Parameter(torch.zeros((self.normalized_shape,)))
 
     def forward(self, x: torch.Tensor):
         if isinstance(x, torch.Tensor):
