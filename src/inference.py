@@ -19,7 +19,7 @@ Attributes:
 batch_size = 64
 sequence_length = 512
 model_dimension = 768
-feed_forward = 2048
+feed_forward = 4096
 number_heads = 12
 dropout = 0.1
 epsilon = 1e-6
