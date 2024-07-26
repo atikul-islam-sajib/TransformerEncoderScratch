@@ -1,7 +1,8 @@
 embedding:
   batch_size: 40
-  sequence_length: 512
+  sequence_length: 200
 
 transformer:
-  dimension: 768
+  dimension: 512
   heads: 8
+  feed_forward: 2048
