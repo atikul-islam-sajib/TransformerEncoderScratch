@@ -116,10 +116,7 @@ netTransformer = TransformerEncoder(
 print("The embedding shape is: ", embedding.size())
 
 # Pass the embedding through the Transformer Encoder and print the output shape
-print(
-    "The output shape is: ",
-    netTransformer(embedding).size(),
-)  # (batch_size, sequence_length, model_dimension)
+print("The output shape is: ", netTransformer(embedding).size(),)  # (batch_size, sequence_length, model_dimension)
 ```
 
 ## Configuration File
