@@ -5,6 +5,7 @@ import torch.nn as nn
 
 sys.path.append("./src")
 
+from utils import config
 from scaled_dot_product import scaled_dot_product
 
 
@@ -91,10 +92,16 @@ if __name__ == "__main__":
         description="MultiHeadAttention for Transformer Encoder".title()
     )
     parser.add_argument(
-        "--dimension", type=int, default=512, help="dimension of the input".capitalize()
+        "--dimension",
+        type=int,
+        default=config()["transformer"]["dimension"],
+        help="dimension of the input".capitalize(),
     )
     parser.add_argument(
-        "--heads", type=int, default=8, help="number of heads".capitalize()
+        "--heads",
+        type=int,
+        default=config()["transformer"]["heads"],
+        help="number of heads".capitalize(),
     )
     parser.add_argument(
         "--mask",
@@ -105,12 +112,17 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    batch_size = config()["embedding"]["batch_size"]
+    sequence_length = config()["embedding"]["sequence_length"]
+
     attention = MultiHeadAttenion(
         dimension=args.dimension, heads=args.heads, mask=args.mask
     )
 
-    assert attention(torch.randn(40, 200, args.dimension)).size() == (
-        40,
-        200,
+    assert attention(
+        torch.randn(batch_size, sequence_length, args.dimension)
+    ).size() == (
+        batch_size,
+        sequence_length,
         args.dimension,
     ), "MultiHeadAttention output size is not equal to input size".capitalize()

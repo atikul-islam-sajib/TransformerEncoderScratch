@@ -6,6 +6,8 @@ import torch.nn as nn
 
 sys.path.append("./src")
 
+from utils import config
+
 
 def scaled_dot_product(
     query: torch.Tensor,
@@ -39,34 +41,53 @@ def scaled_dot_product(
 
 
 if __name__ == "__main__":
+    batch_size = config()["embedding"]["batch_size"]
+    sequence_length = config()["embedding"]["sequence_length"]
+
+    dimension = config()["transformer"]["dimension"]
+    heads = config()["transformer"]["heads"]
+
+    query = key = values = torch.randn(
+        (
+            batch_size,
+            heads,
+            sequence_length,
+            dimension // heads,
+        )
+    )
+    mask = torch.randn((batch_size, sequence_length))
+
     parser = argparse.ArgumentParser(
         description="Scaled Dot Product Attention for Transformers".title()
     )
     parser.add_argument(
-        "--dimension", type=int, default=512, help="Dimension of the input".capitalize()
+        "--dimension",
+        type=int,
+        default=config()["transformer"]["dimension"],
+        help="Dimension of the input".capitalize(),
     )
     parser.add_argument(
         "--query",
         type=torch.Tensor,
-        default=torch.randn((40, 8, 200, 64)),
+        default=query,
         help="Query tensor".capitalize(),
     )
     parser.add_argument(
         "--key",
         type=torch.Tensor,
-        default=torch.randn((40, 8, 200, 64)),
+        default=key,
         help="Key tensor".capitalize(),
     )
     parser.add_argument(
         "--values",
         type=torch.Tensor,
-        default=torch.randn((40, 8, 200, 64)),
+        default=values,
         help="Values tensor".capitalize(),
     )
     parser.add_argument(
         "--mask",
         type=torch.Tensor,
-        default=torch.randn((40, 200)),
+        default=mask,
         help="Mask tensor for padding".capitalize(),
     )
 
