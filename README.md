@@ -133,18 +133,19 @@ You can use a configuration file to manage the parameters for your Transformer E
 
 ```yaml
 path:
-  FILES_PATH: "./artifacts/files/"
-
+  FILES_PATH: "./artifacts/files/"  # Path to store artifact files
+  
 embedding:
-  batch_size: 40
-  sequence_length: 200
+  batch_size: 40                    # Number of samples per batch
+  sequence_length: 200              # Length of each input sequence
 
 transformer:
-  dimension: 512
-  heads: 8
-  feed_forward: 2048
-  dropout: 0.1
-  eps: 1e-6
+  dimension: 512                    # Model dimension (size of the embeddings)
+  heads: 8                          # Number of attention heads
+  feed_forward: 2048                # Dimension of the feed-forward network
+  dropout: 0.1                      # Dropout rate
+  eps: 1e-6                         # Epsilon value for numerical stability in layer normalization
+
 ```
 
 ## Additional Resources
