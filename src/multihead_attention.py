@@ -45,6 +45,10 @@ class MultiHeadAttenion(nn.Module):
                 self.dimension // self.heads,
             )
 
+            self.query = self.query.permute(0, 2, 1, 3)
+            self.key = self.key.permute(0, 2, 3, 1)
+            self.values = self.values.permute(0, 2, 1, 3)
+
             return self.query, self.key, self.values
 
 
