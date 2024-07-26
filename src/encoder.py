@@ -109,6 +109,9 @@ if __name__ == "__main__":
         default=None,
         help="Mask for attention".capitalize(),
     )
+    parser.add_argument(
+        "--display", action="store_true", help="Display the arguments".capitalize()
+    )
 
     args = parser.parse_args()
 
@@ -137,9 +140,13 @@ if __name__ == "__main__":
         dimension,
     ), "Dimension mismatch in the EncoderBlock".capitalize()
 
-    print(summary(model=encoder, input_size=(sequence_length, dimension)))
-    draw_graph(
-        model=encoder, input_data=torch.randn(batch_size, sequence_length, dimension)
-    ).visual_graph.render(
-        filename=os.path.join(config()["path"]["FILES_PATH"], "encoder"), format="png"
-    )
+    if args.display:
+        print(summary(model=encoder, input_size=(sequence_length, dimension)), "\n")
+
+        draw_graph(
+            model=encoder,
+            input_data=torch.randn(batch_size, sequence_length, dimension),
+        ).visual_graph.render(
+            filename=os.path.join(config()["path"]["FILES_PATH"], "encoder"),
+            format="png",
+        )
