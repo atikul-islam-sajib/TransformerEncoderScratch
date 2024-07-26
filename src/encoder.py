@@ -1,7 +1,10 @@
+import os
 import sys
 import torch
 import argparse
 import torch.nn as nn
+from torchsummary import summary
+from torchview import draw_graph
 
 sys.path.append("./src")
 
@@ -133,3 +136,10 @@ if __name__ == "__main__":
         sequence_length,
         dimension,
     ), "Dimension mismatch in the EncoderBlock".capitalize()
+
+    print(summary(model=encoder, input_size=(sequence_length, dimension)))
+    draw_graph(
+        model=encoder, input_data=torch.randn(batch_size, sequence_length, dimension)
+    ).visual_graph.render(
+        filename=os.path.join(config()["path"]["FILES_PATH"], "encoder"), format="png"
+    )
