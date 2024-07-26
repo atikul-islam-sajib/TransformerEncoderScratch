@@ -1,0 +1,10 @@
+# Python 3.10
+dvc
+graphviz
+matplotlib
+numpy
+PyYAML
+torch
+torchaudio
+torchvision
+torchsummary
