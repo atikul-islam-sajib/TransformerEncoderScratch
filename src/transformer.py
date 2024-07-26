@@ -13,11 +13,12 @@ from encoder import EncoderBlock
 
 
 class TransformerEncoder(nn.Module):
+
     def __init__(
         self,
         dimension: int = 512,
         heads: int = 8,
-        fead_foward: int = 2048,
+        feed_forward: int = 2048,
         dropout: float = 0.1,
         epsilon: float = 1e-5,
         mask=None,
@@ -26,7 +27,7 @@ class TransformerEncoder(nn.Module):
 
         self.dimension = dimension
         self.heads = heads
-        self.feed_forward = fead_foward
+        self.feed_forward = feed_forward
         self.dropout = dropout
         self.epsilon = epsilon
         self.mask = mask
@@ -36,7 +37,7 @@ class TransformerEncoder(nn.Module):
                 EncoderBlock(
                     dimension=self.dimension,
                     heads=self.heads,
-                    fead_foward=self.feed_forward,
+                    feed_forward=self.feed_forward,
                     dropout=self.dropout,
                     epsilon=self.epsilon,
                     mask=self.mask,
@@ -78,7 +79,7 @@ if __name__ == "__main__":
         help="Number of heads in the multihead attention".capitalize(),
     )
     parser.add_argument(
-        "--feedfoward",
+        "--feedforward",
         type=int,
         default=config()["transformer"]["feed_forward"],
         help="Dimension of the feedforward layer".capitalize(),
@@ -110,7 +111,7 @@ if __name__ == "__main__":
 
     dimension = args.d_model
     heads = args.heads
-    feed_forward = args.feedfoward
+    feed_forward = args.feedforward
     dropout = args.dropout
     epsilon = args.epsilon
     mask = args.mask
@@ -121,7 +122,7 @@ if __name__ == "__main__":
     netTransfomer = TransformerEncoder(
         dimension=dimension,
         heads=heads,
-        fead_foward=feed_forward,
+        feed_forward=feed_forward,
         dropout=dropout,
         epsilon=epsilon,
         mask=mask,
