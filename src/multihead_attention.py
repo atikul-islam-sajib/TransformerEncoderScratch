@@ -1,5 +1,10 @@
+import sys
 import torch
 import torch.nn as nn
+
+sys.path.append("./src")
+
+from scaled_dot_product import scaled_dot_product
 
 
 class MultiHeadAttenion(nn.Module):
@@ -46,13 +51,23 @@ class MultiHeadAttenion(nn.Module):
             )
 
             self.query = self.query.permute(0, 2, 1, 3)
-            self.key = self.key.permute(0, 2, 3, 1)
+            self.key = self.key.permute(0, 2, 1, 3)
             self.values = self.values.permute(0, 2, 1, 3)
 
-            return self.query, self.key, self.values
+            _, attention = scaled_dot_product(
+                query=self.query, key=self.key, values=self.values, mask=self.mask
+            )
+
+            assert (
+                attention.size() == self.query.size()
+                and self.key.size()
+                and self.values.size()
+            ), "attention size is not equal to query, key and values size".capitalize()
+
+            return attention
 
 
 if __name__ == "__main__":
     attention = MultiHeadAttenion(dimension=512, heads=8, mask=None)
 
-    print(attention(torch.randn(40, 200, 512))[2].size())
+    print(attention(torch.randn(40, 200, 512))[3].size())
