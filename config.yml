@@ -1,0 +1,7 @@
+embeddings:
+  batch_size: 40
+  suquence_length: 200
+  
+transfomer:
+  dimension: 512
+  heads: 8
