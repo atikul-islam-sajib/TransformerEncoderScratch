@@ -112,21 +112,14 @@ netTransformer = TransformerEncoder(
     mask=padding_masked,
 )
 
-# Print the divider line
-print("|", "-" * 100, "|")
-
 # Print the shape of the embedding tensor
-print("|", "\tThe embedding shape is: ", embedding.size())
+print("The embedding shape is: ", embedding.size())
 
 # Pass the embedding through the Transformer Encoder and print the output shape
 print(
-    "|",
-    "\tThe output shape is: ",
+    "The output shape is: ",
     netTransformer(embedding).size(),
 )  # (batch_size, sequence_length, model_dimension)
-
-# Print the closing divider line
-print("|", "-" * 100, "|")
 ```
 
 ## Configuration File
