@@ -8,4 +8,5 @@ torch
 torchaudio
 torchvision
 torchsummary
+transformers
 -e .
